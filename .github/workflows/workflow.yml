@@ -1,0 +1,15 @@
+# here we're giving it a name to our  pipeline
+name: CI workflow
+
+# we also need to specify some workflow triggers,
+# which define when we're launching the pipeline
+on:
+  # in this case, every time there is a push...
+  push:
+    # on the main branch
+    branches: ["main"]
+  # or a pull request
+  pull_request:
+    branches: ["main"]
+    
+

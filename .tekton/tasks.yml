@@ -1,0 +1,30 @@
+# Just recapping, we've created a CI workflow with GitHub actions, which
+# is cool, but now we have to create an automation process for continous deployment. How are we going to do that? With Tekton!
+#
+# Before starting, we need to clean the output workspace so that the
+# CD pipeline can start fresh
+
+#  FIRST STEP: ADDING A CLEANUP TASK
+
+# specify api version
+apiVersion: tekton.dev/v1beta1
+# and clarify that this is a task
+kind: Task
+# this task is named as cleanup
+metadata:
+  name: cleanup
+# And finally, we'll specify the task per se
+spec:
+  description: This task will clean up a workspace by deleting all the files.
+  # This cleanup task will need a workspace named source.
+  workspaces:
+    - name: source
+  # It has a single step called remove
+  steps:
+    - name: remove
+      # that uses the alpine:3 image
+      image: alpine:3
+      env:
+        - name: WORKSPACE_SOURCE_PATH
+          value: $(workspaces.source.path)
+      workingDir: $(workspaces.source.path)

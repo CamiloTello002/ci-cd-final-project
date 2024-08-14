@@ -10,6 +10,21 @@ on:
     branches: ["main"]
   # or a pull request
   pull_request:
+    # to the main branch as well, 
     branches: ["main"]
-    
+
+# we'll run the...
+jobs:
+  # build job
+  build:
+    # on the ubuntu-latest runner
+    runs-on: ubuntu-latest
+    # using a python docker image.
+    container: python:3.9-slim
+    # This job will have the following steps:
+    steps:
+      # checkout step
+      - name: Checkout
+        # that will use the checkout template by GitHub actions
+        uses: actions/checkout@v3
 
